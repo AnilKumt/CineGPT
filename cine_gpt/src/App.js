@@ -1,23 +1,12 @@
-import logo from './logo.svg';
-import './App.css';
-
+import InitialHeader from "./components/SignInHeader/SignInHeader";
+import Body from "./components/BodyComponent/Body";
+import { BG_IMG_URL } from "./utils/constants";
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="App bg-cover bg-center min-h-screen"
+      style={{ backgroundImage: `url(${BG_IMG_URL})` }}>
+      <InitialHeader/>
+      <Body/>
     </div>
   );
 }
