@@ -1,4 +1,4 @@
-import InitialHeader from "./components/SignInHeader/SignInHeader";
+import InitialHeader from "./components/Header/header";
 import Body from "./components/BodyComponent/Body";
 import { BG_IMG_URL } from "./utils/constants";
 import {createBrowserRouter} from "react-router-dom";

@@ -1,7 +1,8 @@
 import { useDispatch, useSelector } from "react-redux";
-import InitialHeader from "../SignInHeader/SignInHeader";
+import InitialHeader from "../Header/header";
 import { removeUser } from "../../store/userSlice/user";
 import { useNavigate } from "react-router";
+
 const Browse = ()=>{
     const userProfile = useSelector((state)=>state.user?.profilePic || "default-profile-pic-url");
     const userDispatch = useDispatch();

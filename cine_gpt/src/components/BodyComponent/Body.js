@@ -6,31 +6,19 @@ import {
   signInWithEmailAndPassword,
   updateProfile
 } from "firebase/auth";
-import { useDispatch } from "react-redux";
-import { addUser } from "../../store/userSlice/user";
-import { useNavigate } from "react-router";
+
 import { DEFAULT_PROFILE_URL } from "../../utils/constants";
 
-
 const Body = () => {
-  const userDispatch = useDispatch();
-  const navigate = useNavigate();
+  
   const [isSignUp, setSignUp] = useState(true);
   const [errorMessage, setError] = useState(null);
   const emailRef = useRef(null);
   const passwordRef = useRef(null);
   const nameRef = useRef(null);
-  const handleSuccess = (user) => {
-    userDispatch(
-      addUser({
-        uid: user.uid,
-        displayName: user.displayName,
-        email: user.email,
-        profilePic: DEFAULT_PROFILE_URL,
-      })
-    );
-    navigate("/browse");
-  };
+  // const handleSuccess = (user) => {
+    
+  // };
   function handleButtonClick() {
     const email = emailRef.current.value;
     const password = passwordRef.current.value;
@@ -50,7 +38,7 @@ const Body = () => {
           }).then(() => user);
         })
         .then((user) => {
-          handleSuccess(user);
+          //handleSuccess(user);
         })
         .catch((error) => {
           setError(error.code + "-" + error.message);
@@ -60,7 +48,7 @@ const Body = () => {
         .then((userCredential) => {
           // Signed in
           const user = userCredential.user;
-          handleSuccess(user);
+          //handleSuccess(user);
         })
         .catch((error) => {
           setError(error.code + "-" + error.message);
@@ -102,13 +90,13 @@ const Body = () => {
         {errorMessage && (
           <p className="text-red-700 font-bold">{errorMessage}</p>
         )}
-        <button
-          onClick={handleButtonClick}
+        <button onClick={}
+      
           className="w-full py-3 text-lg font-semibold text-white bg-red-600 rounded hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500"
         >
           Submit
         </button>
-        <p onClick={handleFormChange} className="text-white cursor-pointer">
+        <p  className="text-white cursor-pointer">
           {isSignUp ? "Already a user? Sign In" : "New to Netflix? Sign Up Now"}
         </p>
       </form>
