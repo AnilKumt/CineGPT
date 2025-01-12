@@ -12,4 +12,4 @@ export const API_OPTIONS ={
     }
   };
 
-export  const ALL_MOVIES_API_URL = 'https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&page=1&sort_by=popularity.desc';
+export  const ALL_MOVIES_API_URL = 'https://api.themoviedb.org/3/movie/now_playing?language=en-US&page=1';
