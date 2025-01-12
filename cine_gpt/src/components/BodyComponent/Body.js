@@ -6,7 +6,6 @@ import {
   signInWithEmailAndPassword,
   updateProfile
 } from "firebase/auth";
-
 import { DEFAULT_PROFILE_URL } from "../../utils/constants";
 
 const Body = () => {
@@ -90,7 +89,7 @@ const Body = () => {
         {errorMessage && (
           <p className="text-red-700 font-bold">{errorMessage}</p>
         )}
-        <button onClick={}
+        <button onClick={handleButtonClick}
       
           className="w-full py-3 text-lg font-semibold text-white bg-red-600 rounded hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500"
         >

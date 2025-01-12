@@ -4,7 +4,7 @@ import { BG_IMG_URL } from "./utils/constants";
 import {createBrowserRouter} from "react-router-dom";
 import Browse from "./components/BrowseComponent/Browse";
 import { Provider } from "react-redux";
-import appStore from "./store/app.store";
+import appStore from "./store/appstore";
 import { RouterProvider } from "react-router-dom";
 const appRoutes = createBrowserRouter([
   {
