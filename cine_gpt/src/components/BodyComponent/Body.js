@@ -7,7 +7,7 @@ import {
   updateProfile
 } from "firebase/auth";
 import { useDispatch } from "react-redux";
-import { addUser } from "../../store/userSlice/user";
+import { addUser } from "../../store/user";
 import { useNavigate } from "react-router";
 import { DEFAULT_PROFILE_URL } from "../../utils/constants";
 

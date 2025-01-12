@@ -1,8 +1,12 @@
 import { useDispatch, useSelector } from "react-redux";
 import InitialHeader from "../SignInHeader/SignInHeader";
-import { removeUser } from "../../store/userSlice/user";
+import { removeUser } from "../../store/user";
 import { useNavigate } from "react-router";
+import { useEffect } from "react";
+import { API_OPTIONS } from "../../utils/constants";
+import useMovies from "../../hooks/moviesHook";
 const Browse = ()=>{
+    
     const userProfile = useSelector((state)=>state.user?.profilePic || "default-profile-pic-url");
     const userDispatch = useDispatch();
     const navigate = useNavigate();
@@ -10,6 +14,8 @@ const Browse = ()=>{
         userDispatch(removeUser());
         navigate("/");
     }
+
+    useMovies()
     return(
         <div>
             <InitialHeader/>
