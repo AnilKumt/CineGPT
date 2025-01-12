@@ -1,21 +1,21 @@
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { addMovies } from "../store/movies";
-import { API_OPTIONS,ALL_MOVIES_API_URL } from "../utils/constants";
+import { addNowPlaying } from "../store/movies";
+import { API_OPTIONS,NOW_PLAYING_API_URL } from "../utils/constants";
 
 
-const useMovies = () => {
+const useNowPlayingMovies = () => {
 
-    const movieDispatch = useDispatch((state)=>state.movies.allMovies);
+    const movieDispatch = useDispatch((state)=>state?.movies?.addNowPlaying);
     useEffect(()=>{
         getMovies();
     },[]);
 
     const getMovies =async ()=>{
-        const data = await fetch(ALL_MOVIES_API_URL,API_OPTIONS);
+        const data = await fetch(NOW_PLAYING_API_URL,API_OPTIONS);
         const json = await data.json();
-        movieDispatch(addMovies(json.results));
+        movieDispatch(addNowPlaying(json.results));
     }
 }
 
-export default useMovies;
+export default useNowPlayingMovies;

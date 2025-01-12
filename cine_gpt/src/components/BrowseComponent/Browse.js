@@ -2,11 +2,13 @@ import { useDispatch, useSelector } from "react-redux";
 import InitialHeader from "../Header/header";
 import { removeUser } from "../../store/user";
 import { useNavigate } from "react-router";
-import useMovies from "../../hooks/moviesHook";
+import useNowPlayingMovies from "../../hooks/moviesHook";
 import MovieTrailer from "../MovieTrailer/MovieTrailer";
 import { FaSignOutAlt, FaUser } from "react-icons/fa";
 import { signOut } from "firebase/auth";
 import { auth } from "../../utils/firebase";
+
+
 const Browse = () => {
   const userProfile = useSelector((state) => state.user?.profilePic);
   const userDispatch = useDispatch();
@@ -19,7 +21,7 @@ const Browse = () => {
     });
   };
 
-  useMovies();
+  useNowPlayingMovies();
 
   return (
     <div className="relative min-h-screen">
@@ -46,6 +48,9 @@ const Browse = () => {
 
       <div className="relative">
         <MovieTrailer />
+      </div>
+      <div className="movie_recommendation">
+        {/* <MovieLists/> */}
       </div>
     </div>
   );

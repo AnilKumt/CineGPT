@@ -12,4 +12,4 @@ export const API_OPTIONS ={
     }
   };
 
-export  const ALL_MOVIES_API_URL = 'https://api.themoviedb.org/3/movie/now_playing?language=en-US&page=1';
+export  const NOW_PLAYING_API_URL = 'https://api.themoviedb.org/3/movie/now_playing?language=en-US&page=1';

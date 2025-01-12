@@ -4,8 +4,8 @@ import MovieTrailerVideo from "../MovieTrailerVideo/MovieTrailerVideo";
 import { FaPlay, FaInfoCircle } from "react-icons/fa";
 
 const MovieTrailer = () => {
-    const moviesData = useSelector((state) => state?.movies?.allMovies);
-    const topMovieTrailerId = useSelector((state) => state?.movies?.topMovieId);
+    const moviesData = useSelector((state) => state?.allMovies?.nowPlaying);
+    const topMovieTrailerId = useSelector((state) => state?.allMovies?.topMovieId);
     const topMovieId = !moviesData || moviesData.length === 0 ? null : moviesData[0].id;
     const { isLoading } = useMovieTrailer({ topMovieId });
 
