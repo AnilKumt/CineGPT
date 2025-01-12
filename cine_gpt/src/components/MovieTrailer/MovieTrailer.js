@@ -1,6 +1,6 @@
 import { useSelector } from "react-redux";
 import useMovieTrailer from "../../hooks/movieTrailer";
-
+import MovieTrailerVideo from "../MovieTrailerVideo/MovieTrailerVideo";
 const MovieTrailer = () => {
     const moviesData = useSelector((state) => state?.movies?.allMovies);
     const topMovieTrailerId = useSelector((state)=> state?.movies?.topMovieId)
@@ -12,9 +12,10 @@ const MovieTrailer = () => {
 
     return (
         <div>
-        {isLoading ?<h1>Loader</h1> : (<iframe width="560" height="315" src={"https://www.youtube.com/embed/"+topMovieTrailerId} title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerPolicy="strict-origin-when-cross-origin" allowFullScreen></iframe>)}
-    </div>
+            {isLoading ?<h1>Loading</h1> : <MovieTrailerVideo movieVideoId={topMovieTrailerId}/>}
+            <button className="absolute top-[80%] left-16 text-3xl bg-white text-black px-4 py-2 rounded-lg">Play</button>
+        </div>
     );
-};
+}
 
 export default MovieTrailer;
