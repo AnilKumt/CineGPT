@@ -6,27 +6,39 @@ import Browse from "./components/BrowseComponent/Browse";
 import { Provider } from "react-redux";
 import appStore from "./store/appstore";
 import { RouterProvider } from "react-router-dom";
+import { AuthRoute, ProtectedRoute } from "./ProtectedRoute";
+
 const appRoutes = createBrowserRouter([
   {
-    path:"/",
-    element:(<div className="App bg-cover bg-center min-h-screen"
-        style={{ backgroundImage: `url(${BG_IMG_URL})` }}>
-            <InitialHeader/>
-            <Body/>
-        </div>)
+    path: "/",
+    element: (
+      <AuthRoute>
+        <div 
+          className="App min-h-screen bg-cover bg-center bg-fixed"
+          style={{ 
+            backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.8)), url(${BG_IMG_URL})` 
+          }}
+        >
+          <InitialHeader/>
+          <Body/>
+        </div>
+      </AuthRoute>
+    )
   },
   {
-    path:'/browse',
-    element:<Browse/>
+    path: '/browse',
+    element: (
+      <ProtectedRoute>
+        <Browse/>
+      </ProtectedRoute>
+    )
   }
-
 ]);
-
 
 function App() {
   return (
     <Provider store={appStore}>
-        <RouterProvider router={appRoutes} />
+      <RouterProvider router={appRoutes} />
     </Provider>
   );
 }

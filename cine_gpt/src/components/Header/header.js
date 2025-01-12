@@ -1,7 +1,7 @@
 import { LOGO_URL } from "../../utils/constants";
 import {auth} from "../../utils/firebase";
 import { useDispatch } from "react-redux";
-import { addUser } from "../../store/userSlice/user";
+import { addUser } from "../../store/user";
 import { useNavigate } from "react-router";
 import { DEFAULT_PROFILE_URL } from "../../utils/constants";
 import { onAuthStateChanged } from "firebase/auth";
@@ -32,8 +32,8 @@ const InitialHeader = () => {
       return () => unsubscribe();
     },[userDispatch, navigate]);
     return (
-        <div className="bg-gradient-to-b from-black to-transparent relative h-32 flex items-center">
-            <img src={LOGO_URL} alt="logo" className="h-32 w-64 absolute" />
+        <div className="bg-gradient-to-b from-black to-transparent h-32 flex items-center">
+            <img src={LOGO_URL} alt="logo" className="h-32 w-64 absolute top-0 left-4 z-100" />
         </div>
     )
 }

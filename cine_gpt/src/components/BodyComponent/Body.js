@@ -1,106 +1,120 @@
 import { useRef, useState } from "react";
 import validateLogin from "../../utils/validateLogin";
 import { auth } from "../../utils/firebase";
-import {
-  createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,
-  updateProfile
-} from "firebase/auth";
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { DEFAULT_PROFILE_URL } from "../../utils/constants";
+import { FaUser, FaEnvelope, FaLock, FaSpinner } from "react-icons/fa";
 
 const Body = () => {
-  
-  const [isSignUp, setSignUp] = useState(true);
-  const [errorMessage, setError] = useState(null);
-  const emailRef = useRef(null);
-  const passwordRef = useRef(null);
-  const nameRef = useRef(null);
-  // const handleSuccess = (user) => {
-    
-  // };
-  function handleButtonClick() {
-    const email = emailRef.current.value;
-    const password = passwordRef.current.value;
-    const message = validateLogin(email, password);
-    console.log(message);
-    setError(message);
-    if (message !== null) return; // data invalid.
+    const [isSignUp, setSignUp] = useState(true);
+    const [errorMessage, setError] = useState(null);
+    const [isLoading, setIsLoading] = useState(false);
+    const emailRef = useRef(null);
+    const passwordRef = useRef(null);
+    const nameRef = useRef(null);
 
-    if (isSignUp) {
-      createUserWithEmailAndPassword(auth, email, password)
-        .then((userCredential) => {
-          const user = userCredential.user;
-          // Update the user's profile with their name
-          return updateProfile(user, {
-            displayName: nameRef?.current?.value,
-            profilePic: DEFAULT_PROFILE_URL,
-          }).then(() => user);
-        })
-        .then((user) => {
-          //handleSuccess(user);
-        })
-        .catch((error) => {
-          setError(error.code + "-" + error.message);
-        });
-    } else {
-      signInWithEmailAndPassword(auth, email, password)
-        .then((userCredential) => {
-          // Signed in
-          const user = userCredential.user;
-          //handleSuccess(user);
-        })
-        .catch((error) => {
-          setError(error.code + "-" + error.message);
-        });
-    }
-  }
-  function handleFormChange() {
-    setSignUp(!isSignUp);
-  }
-  return (
-    <div className="Body">
-      <form
-        onClick={(e) => e.preventDefault()}
-        className="w-3/12 h-3/4 bg-black bg-opacity-75 my-6 mx-auto p-6 flex flex-col space-y-11 rounded-lg shadow-lg"
-      >
-        <h1 className="text-white text-3xl">
-          {isSignUp ? "Sign Up" : "Sign In"}
-        </h1>
-        {isSignUp && (
-          <input
-            ref={nameRef}
-            className="w-full p-3 text-lg text-white bg-gray-800 border border-gray-600 rounded focus:outline-none focus:ring-2 focus:ring-red-500"
-            type="text"
-            placeholder="Full Name"
-          />
-        )}
-        <input
-          ref={emailRef}
-          className="w-full p-3 text-lg text-white bg-gray-800 border border-gray-600 rounded focus:outline-none focus:ring-2 focus:ring-red-500"
-          type="email"
-          placeholder="Email"
-        />
-        <input
-          ref={passwordRef}
-          className="w-full p-3 text-lg text-white bg-gray-800 border border-gray-600 rounded focus:outline-none focus:ring-2 focus:ring-red-500"
-          type="password"
-          placeholder="Password"
-        />
-        {errorMessage && (
-          <p className="text-red-700 font-bold">{errorMessage}</p>
-        )}
-        <button onClick={handleButtonClick}
-      
-          className="w-full py-3 text-lg font-semibold text-white bg-red-600 rounded hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500"
-        >
-          Submit
-        </button>
-        <p  className="text-white cursor-pointer">
-          {isSignUp ? "Already a user? Sign In" : "New to Netflix? Sign Up Now"}
-        </p>
-      </form>
-    </div>
-  );
+    const handleButtonClick = async () => {
+        setIsLoading(true);
+        const email = emailRef.current.value;
+        const password = passwordRef.current.value;
+        const message = validateLogin(email, password);
+        setError(message);
+
+        if (message !== null) {
+            setIsLoading(false);
+            return;
+        }
+
+        try {
+            if (isSignUp) {
+                const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+                await updateProfile(userCredential.user, {
+                    displayName: nameRef?.current?.value,
+                    photoURL: DEFAULT_PROFILE_URL,
+                });
+            } else {
+                await signInWithEmailAndPassword(auth, email, password);
+            }
+        } catch (error) {
+            setError(error.message);
+        } finally {
+            setIsLoading(false);
+        }
+    };
+
+    return (
+        <div className="min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+            <div className="max-w-md w-full space-y-8 bg-black/80 p-8 rounded-xl backdrop-blur-sm animate-fade-in">
+                <div>
+                    <h2 className="text-center text-3xl font-extrabold text-white">
+                        {isSignUp ? "Create your account" : "Welcome back"}
+                    </h2>
+                </div>
+                <form className="mt-8 space-y-6" onSubmit={(e) => e.preventDefault()}>
+                    <div className="rounded-md shadow-sm space-y-4">
+                        {isSignUp && (
+                            <div className="relative">
+                                <FaUser className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+                                <input
+                                    ref={nameRef}
+                                    type="text"
+                                    className="appearance-none rounded-lg relative block w-full px-10 py-3 border border-gray-700 bg-gray-800 text-white placeholder-gray-400 focus:outline-none focus:ring-cinegpt-accent focus:border-cinegpt-accent focus:z-10 sm:text-sm"
+                                    placeholder="Full Name"
+                                />
+                            </div>
+                        )}
+                        
+                        <div className="relative">
+                            <FaEnvelope className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+                            <input
+                                ref={emailRef}
+                                type="email"
+                                className="appearance-none rounded-lg relative block w-full px-10 py-3 border border-gray-700 bg-gray-800 text-white placeholder-gray-400 focus:outline-none focus:ring-cinegpt-accent focus:border-cinegpt-accent focus:z-10 sm:text-sm"
+                                placeholder="Email address"
+                            />
+                        </div>
+                        
+                        <div className="relative">
+                            <FaLock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+                            <input
+                                ref={passwordRef}
+                                type="password"
+                                className="appearance-none rounded-lg relative block w-full px-10 py-3 border border-gray-700 bg-gray-800 text-white placeholder-gray-400 focus:outline-none focus:ring-cinegpt-accent focus:border-cinegpt-accent focus:z-10 sm:text-sm"
+                                placeholder="Password"
+                            />
+                        </div>
+                    </div>
+
+                    {errorMessage && (
+                        <div className="text-red-500 text-sm font-medium bg-red-100/10 p-3 rounded-lg">
+                            {errorMessage}
+                        </div>
+                    )}
+
+                    <button
+                        onClick={handleButtonClick}
+                        disabled={isLoading}
+                        className="group relative w-full flex justify-center py-3 px-4 border border-transparent text-sm font-medium rounded-lg text-white bg-cinegpt-primary hover:bg-cinegpt-primary/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-cinegpt-accent transition-all duration-200"
+                    >
+                        {isLoading ? (
+                            <FaSpinner className="animate-spin text-xl" />
+                        ) : (
+                            isSignUp ? "Sign Up" : "Sign In"
+                        )}
+                    </button>
+
+                    <div className="text-center">
+                        <button
+                            onClick={() => setSignUp(!isSignUp)}
+                            className="text-cinegpt-accent hover:text-cinegpt-accent/80 text-sm font-medium transition-colors duration-200"
+                        >
+                            {isSignUp ? "Already have an account? Sign In" : "New to CineGPT? Sign Up"}
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    );
 };
 
 export default Body;

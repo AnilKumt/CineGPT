@@ -1,45 +1,55 @@
 import { useDispatch, useSelector } from "react-redux";
 import InitialHeader from "../Header/header";
-import { removeUser } from "../../store/userSlice/user";
+import { removeUser } from "../../store/user";
 import { useNavigate } from "react-router";
 import useMovies from "../../hooks/moviesHook";
 import MovieTrailer from "../MovieTrailer/MovieTrailer";
-
+import { FaSignOutAlt, FaUser } from "react-icons/fa";
+import { signOut } from "firebase/auth";
+import { auth } from "../../utils/firebase";
 const Browse = () => {
-  const userProfile = useSelector(
-    (state) => state.user?.profilePic || "default-profile-pic-url"
-  );
+  const userProfile = useSelector((state) => state.user?.profilePic);
   const userDispatch = useDispatch();
   const navigate = useNavigate();
 
   const handleSignOut = () => {
-    userDispatch(removeUser());
-    navigate("/");
+    signOut(auth).then(() => {
+      userDispatch(removeUser());
+      navigate("/");
+    });
   };
 
   useMovies();
 
   return (
-    <div className="relative min-h-screen flex flex-col">
-      <InitialHeader />
-      <div className="flex absolute z-20 right-0 justify-end items-center p-4">
-        <img
-          className="h-12 w-12 rounded-full"
-          src={userProfile}
-          alt="user"
-        />
-        <button
-          onClick={handleSignOut}
-          className="px-6 py-2 ml-4 rounded-lg bg-red-700 text-white hover:bg-red-800"
-        >
-          Sign Out
-        </button>
+    <div className="relative min-h-screen">
+      <div className="fixed top-0 w-full z-50">
+        <InitialHeader />
+        <div className="absolute right-4 top-4 flex items-center gap-4">
+          <div className="group relative">
+            <img
+              src={userProfile}
+              alt="profile"
+              className="h-10 w-10 rounded-full cursor-pointer"
+            />
+            <div className="absolute right-0 top-12 bg-black/90 p-4 rounded-md invisible group-hover:visible transition-all duration-300">
+              <button
+                onClick={handleSignOut}
+                className="text-white hover:text-cinegpt-accent flex items-center gap-2"
+              >
+                <FaSignOutAlt /> Sign Out
+              </button>
+            </div>
+          </div>
+        </div>
       </div>
-      <div className="mt-0 flex-grow">
+
+      <div className="relative">
         <MovieTrailer />
       </div>
     </div>
   );
 };
+
 
 export default Browse;
