@@ -1,6 +1,8 @@
+import { useSelector } from "react-redux";
 import { BG_IMG_URL } from "../../utils/constants";
-
+import { langConfigData } from "../../utils/constants";
 const GPTSearch = () => {
+  const langSelector = useSelector((state)=>state?.langPrefered?.lang);
   return (
     <div
       className="min-h-screen bg-cover bg-center bg-fixed pt-32"
@@ -12,11 +14,11 @@ const GPTSearch = () => {
         <div className="flex gap-4">
           <input
             type="text"
-            placeholder="What do you want to watch today?"
+            placeholder={langConfigData[langSelector].placeholder}
             className="flex-1 bg-black/80 text-white px-6 py-4 rounded-lg border border-gray-600 focus:outline-none focus:border-cinegpt-accent placeholder:text-gray-400"
           />
           <button className="bg-cinegpt-accent px-8 py-4 rounded-lg text-white font-medium hover:bg-cinegpt-accent/80 transition-all duration-300">
-            Search
+            {langConfigData[langSelector].search}
           </button>
         </div>
       </div>

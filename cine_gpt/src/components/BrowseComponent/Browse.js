@@ -13,12 +13,14 @@ import { auth } from "../../utils/firebase";
 import MovieLists from "../MovieSuggestions/MovieLists";
 import { toggleGPTSearch } from "../../store/gptSearch";
 import GPTSearch from "../GPTComponents/GPTSearch";
+import { changeLanguage } from "../../store/langConfig";
 
 const Browse = () => {
   const userProfile = useSelector((state) => state.user?.profilePic);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const searchSelector = useSelector((state) => state?.gptSearch?.gptSearch);
+  
   const handleSignOut = () => {
     signOut(auth).then(() => {
       dispatch(removeUser());
@@ -28,6 +30,10 @@ const Browse = () => {
   const handleGPTSearch = () => {
     dispatch(toggleGPTSearch(!searchSelector));
   };
+
+  const handleLanguageChange = (e) => {
+    dispatch(changeLanguage(e.target.value));
+  }
   useNowPlayingMovies();
   usePopular();
   useTopRated();
@@ -40,7 +46,7 @@ const Browse = () => {
           {searchSelector && (
             <div>
               <select
-                name="languages"
+                name="languages" onChange={handleLanguageChange}
                 className="bg-black/80 text-white px-8 py-2 rounded-md border border-gray-600 focus:outline-none focus:border-cinegpt-accent"
               >
                 <option value="english">English</option>

@@ -21,3 +21,30 @@ export const TOP_RATED_API_URL = 'https://api.themoviedb.org/3/movie/top_rated?l
 export const UPCOMING_API_URL = 'https://api.themoviedb.org/3/movie/upcoming?language=hi&page=1';
 
 export const IMAGE_URL = "https://image.tmdb.org/t/p/w500/";
+
+export const langConfigData = {
+  english:{
+    search:"Search",
+    placeholder:"What to you want to to watch today?"
+  },
+  hindi: {
+    search: "खोजें",
+    placeholder: "आज आप क्या देखना चाहते हैं?"
+  },
+  telugu: {
+    search: "శోధన",
+    placeholder: "ఈ రోజు మీరు ఏమి చూడాలనుకుంటున్నారు?"
+  },
+  chinese: {
+    search: "搜索",
+    placeholder: "今天你想看什么？"
+  },
+  korean: {
+    search: "검색",
+    placeholder: "오늘 무엇을 보고 싶으세요?"
+  },
+  spanish: {
+    search: "Buscar",
+    placeholder: "¿Qué quieres ver hoy?"
+  }
+}
