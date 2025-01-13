@@ -12,20 +12,18 @@ const useMovieTrailer = ({ topMovieId }) => {
     
     const fetchTrailer = async () => {
       try {
-        console.log("Fetching trailer for movie ID:", topMovieId);
         const VIDEO_API_URL = `https://api.themoviedb.org/3/movie/${topMovieId}/videos?language=en-US`;
         const response = await fetch(VIDEO_API_URL, API_OPTIONS);
         const data = await response.json();
-        console.log("API Response:", data);
+        
 
         const allVideos = Object.values(data.results || {});
-        console.log("All Videos:", allVideos);
+        
 
         const filteredVideos = allVideos.filter((movie) => movie.type === "Trailer");
-        console.log("Filtered Trailers:", filteredVideos);
-
+        
         const trailerVideo = filteredVideos.length ? filteredVideos[0] : allVideos[0];
-        console.log("Selected Trailer Video:", trailerVideo);
+      
 
         if (trailerVideo) {
           movieIdDispatch(addTopTrailerMovieId(trailerVideo.key));

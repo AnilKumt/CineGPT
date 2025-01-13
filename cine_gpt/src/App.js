@@ -7,7 +7,7 @@ import { Provider } from "react-redux";
 import appStore from "./store/appstore";
 import { RouterProvider } from "react-router-dom";
 import { AuthRoute, ProtectedRoute } from "./ProtectedRoute";
-
+import GPTSearch from "./components/GPTComponents/GPTSearch";
 const appRoutes = createBrowserRouter([
   {
     path: "/",
@@ -30,6 +30,14 @@ const appRoutes = createBrowserRouter([
     element: (
       <ProtectedRoute>
         <Browse/>
+      </ProtectedRoute>
+    )
+  },
+  {
+    path: '/gptSearch',
+    element: (
+      <ProtectedRoute>
+        <GPTSearch/>
       </ProtectedRoute>
     )
   }

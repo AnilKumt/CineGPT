@@ -24,6 +24,7 @@ export const AuthRoute = ({ children }) => {
 };
 
 export const ProtectedRoute = ({ children }) => {
+  console.log(children);
   const [isLoading, setIsLoading] = useState(true);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
