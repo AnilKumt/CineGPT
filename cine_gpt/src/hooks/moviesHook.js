@@ -6,7 +6,7 @@ import { API_OPTIONS,NOW_PLAYING_API_URL } from "../utils/constants";
 
 const useNowPlayingMovies = () => {
 
-    const movieDispatch = useDispatch((state)=>state?.movies?.addNowPlaying);
+    const movieDispatch = useDispatch();
     useEffect(()=>{
         getMovies();
     },[]);

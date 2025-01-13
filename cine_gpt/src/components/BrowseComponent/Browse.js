@@ -3,11 +3,14 @@ import InitialHeader from "../Header/header";
 import { removeUser } from "../../store/user";
 import { useNavigate } from "react-router";
 import useNowPlayingMovies from "../../hooks/moviesHook";
+import usePopular from "../../hooks/popular";
+import useTopRated from "../../hooks/topRated";
+import useUpComing from "../../hooks/upcoming";
 import MovieTrailer from "../MovieTrailer/MovieTrailer";
 import { FaSignOutAlt, FaUser } from "react-icons/fa";
 import { signOut } from "firebase/auth";
 import { auth } from "../../utils/firebase";
-
+import MovieLists from "../MovieSuggestions/MovieLists";
 
 const Browse = () => {
   const userProfile = useSelector((state) => state.user?.profilePic);
@@ -22,7 +25,9 @@ const Browse = () => {
   };
 
   useNowPlayingMovies();
-
+  usePopular();
+  useTopRated();
+  useUpComing();
   return (
     <div className="relative min-h-screen">
       <div className="fixed top-0 w-full z-50">
@@ -49,8 +54,11 @@ const Browse = () => {
       <div className="relative">
         <MovieTrailer />
       </div>
-      <div className="movie_recommendation">
-        {/* <MovieLists/> */}
+      <div className="movie_recommendation bg-black">
+        <MovieLists type="nowPlaying" />
+        <MovieLists type="popular" />
+        <MovieLists type="topRated" />
+        <MovieLists type="upComing" />
       </div>
     </div>
   );
